@@ -18,6 +18,12 @@ pipeline {
         stage("deploy") {
             steps {
                 echo 'deploying the application...'
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', 
+                                  credentialsId: 'admin_user_credentials', 
+                                  usernameVariable: 'USER', 
+                                  passwordVariable: 'PWD']]) {
+                    sh 'printf ${USER}'
+                }
             }
         }
     }
