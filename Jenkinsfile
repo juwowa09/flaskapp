@@ -5,26 +5,37 @@ pipeline {
       booleanParam(name: 'executeTests', defaultValue: true, description: '')
    }
    stages {
-      stage("Checkout") {
+      stage("init") {
          steps {
-            checkout scm
+            script {
+               gv = load "script.groovy"
+            }
          }
       }
-      stage("Build") {
+      stage("build") {
          steps {
-            sh 'docker-compose build web'
+            script {
+               gv.buildApp()
+            }
          }
       }
-      stage("Tag and Push") {
+      stage("test") {
+         when {
+            expression {
+               params.executeTests
+            }
+         }
          steps {
-              sh "docker tag jenkins-pipeline_web:latest ${DOCKER_USER_ID}/jenkins-app:${BUILD_NUMBER}"
-               sh "docker login -u ${DOCKER_USER_ID}-p ${DOCKER_USER_PASSWORD}"
-               sh "docker push ${DOCKER_USER_ID}/jenkins-app:${BUILD_NUMBER}"
+            script {
+               gv.testApp()
+            }
          }
       }
       stage("deploy") {
          steps {
-            sh "docker-compose up -d"
+            script {
+               gv.deployApp()
+            }
          }
       }
    }
