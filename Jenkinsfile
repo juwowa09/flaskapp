@@ -20,8 +20,8 @@ pipeline {
                 echo 'deploying the application...'
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', 
                                   credentialsId: 'juwowa_user_admin', 
-                                  usernameVariable: 'juwowa_user', 
-                                  passwordVariable: 'wn0605']]) {
+                                  usernameVariable: 'USER', 
+                                  passwordVariable: 'PWD']]) {
                     sh 'printf ${USER}'
                 }
             }
