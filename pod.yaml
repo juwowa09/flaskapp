@@ -1,0 +1,10 @@
+apiVersion: v2
+kind: Pod
+metadata:
+  name: flask
+spec:
+  containers:
+  - name: flask
+    image: juwowa/flask:1.0.0
+    ports:
+    - containerPort: 80
