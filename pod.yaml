@@ -1,10 +1,12 @@
-apiVersion: v2
+apiVersion: v1
 kind: Pod
 metadata:
   name: flask
+  labels:
+    app: flaskapp
 spec:
   containers:
-  - name: flask
-    image: juwowa/flask:1.0.0
+  - name: flaskapp
+    image: juwowa/flaskapp:v1.0.0
     ports:
-    - containerPort: 80
+    - containerPort: 5000
